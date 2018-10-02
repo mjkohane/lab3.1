@@ -1,1 +1,65 @@
 
+---
+title: "lab3"
+author: "Karthik"
+date: "September 27, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+
+install.packages("productplots")
+data(happy, package="productplots")
+head(happy)
+
+HAPPY <- readRDS("HAPPY.rds")
+HAPPY
+
+df.Rep(HAPPY, 1:11,"NA" | "IAP" | "DK","NA")
+
+HAPPY$POLVIEWS[HAPPY$POLVIEWS == "IAP" |HAPPY$POLVIEWS == "DK" |HAPPY$POLVIEWS == "NA"  ] <- "NA"
+HAPPY$PARTYID[HAPPY$PARTYID == "IAP" |HAPPY$PARTYID == "DK" |HAPPY$PARTYID == "NA"  ] <- "NA"
+HAPPY$WTSSALL[HAPPY$WTSSALL == "IAP" |HAPPY$WTSSALL == "DK" |HAPPY$WTSSALL == "NA"  ] <- "NA"
+HAPPY$HEALTH[HAPPY$HEALTH == "IAP" |HAPPY$HEALTH == "DK" |HAPPY$HEALTH == "NA"  ] <- "NA"
+HAPPY$FINRELA[HAPPY$FINRELA == "IAP" |HAPPY$FINRELA == "DK" |HAPPY$FINRELA == "NA"  ] <- "NA"
+HAPPY$DEGREE[HAPPY$DEGREE == "IAP" |HAPPY$DEGREE == "DK" |HAPPY$DEGREE == "NA"  ] <- "NA"
+HAPPY$MARITAL[HAPPY$MARITAL == "IAP" |HAPPY$MARITAL == "DK" |HAPPY$MARITAL == "NA"  ] <- "NA"
+HAPPY$SEX[HAPPY$SEX == "IAP" |HAPPY$SEX == "DK" |HAPPY$SEX == "NA"  ] <- "NA"
+HAPPY$AGE[HAPPY$AGE == "IAP" |HAPPY$AGE == "DK" |HAPPY$AGE == "NA"  ] <- "NA"
+HAPPY$YEAR[HAPPY$YEAR == "IAP" |HAPPY$YEAR == "DK" |HAPPY$YEAR == "NA"  ] <- "NA"
+HAPPY$HAPPY[HAPPY$HAPPY == "IAP" |HAPPY$HAPPY == "DK" |HAPPY$HAPPY == "NA"  ] <- "NA"
+
+
+grep(“89 OR OLDER”, HAPPY$AGE) 
+
+typeof(HAPPY$AGE)
+HAPPY$AGE[HAPPY$AGE == '89 OR OLDER'] <- 89
+# We did not observed any age that was 89 or older
+
+HAPPY$HEALTH
+
+library(ggplot2)
+
+ggplot(data = HAPPY, aes(x = HAPPY,y= AGE)) + geom_jitter()
+
+ggplot(data = HAPPY, aes(x = HAPPY,y= DEGREE)) + geom_bin2d()
+
+head(HAPPY)
+
+HAPPY$MARITAL <- factor(HAPPY$MARITAL,levels=HAPPY$AGE,ordered=TRUE)
+
+HAPPY$MARITAL <- levels(reorder(HAPPY$MARITAL, HAPPY$AGE, na.rm=FALSE))
+
+HAPPY$MARITAL <- reorder(HAPPY$MARITAL, HAPPY$AGE)
+
+```
