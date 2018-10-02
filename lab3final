@@ -1,7 +1,7 @@
 ---
-title: "lab3"
-author: "Karthik Subbarao and Matt Kohane""
-date: "September 27, 2018"
+title: "3rdlab"
+author: "Karthik and Matt Kohane"
+date: "October 1, 2018"
 output: html_document
 ---
 
@@ -9,6 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+##Link
+https://github.com/mjkohane/lab3.1.git
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
@@ -17,14 +20,11 @@ When you click the **Knit** button a document will be generated that includes bo
 
 ```{r cars}
 
-install.packages("productplots")
-data(happy, package="productplots")
-head(happy)
 
 HAPPY <- readRDS("HAPPY.rds")
-HAPPY
 
-df.Rep(HAPPY, 1:11,"NA" | "IAP" | "DK","NA")
+
+
 #1
 HAPPY$POLVIEWS[HAPPY$POLVIEWS == "IAP" |HAPPY$POLVIEWS == "DK" |HAPPY$POLVIEWS == "NA"  ] <- "NA"
 HAPPY$PARTYID[HAPPY$PARTYID == "IAP" |HAPPY$PARTYID == "DK" |HAPPY$PARTYID == "NA"  ] <- "NA"
@@ -53,11 +53,12 @@ HAPPY$FINRELA = factor(HAPPY$FINRELA, levels = c("FAR BELOW AVERAGE","BELOW AVER
 library(ggplot2)
 
 ggplot(data = HAPPY, aes(x = HAPPY,y= AGE)) + geom_jitter()
-# relationship between age and happiness. 
+# relationship between age and happiness. People who lived unhappy did not live long, as compared to people who did live happy
 
 
 ggplot(data = HAPPY, aes(x = HAPPY,y= DEGREE)) + geom_bin2d()
 # relationship between happiness and degrees. 
+
 
 
 library(ggplot2)
@@ -82,13 +83,17 @@ plot4<- ggplot(data = excellent, aes(x = HAPPY ,y= HEALTH)) + geom_jitter() + la
 
 plot_grid(plot1, plot2,plot3,plot4, labels = "AUTO")
 # relationship between happiness and health. 
-
+# we found that people with poor health were unhappy as there were less people who were very happy. And people who had excellent health were more happy, as there were more people who were very happy
 head(HAPPY)
 
-HAPPY$MARITAL <- factor(HAPPY$MARITAL,levels=HAPPY$AGE,ordered=TRUE)
-
-HAPPY$MARITAL <- levels(reorder(HAPPY$MARITAL, HAPPY$AGE, na.rm=FALSE))
-
-HAPPY$MARITAL <- reorder(HAPPY$MARITAL, HAPPY$AGE)
-
 ```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
