@@ -1,7 +1,6 @@
-
 ---
 title: "lab3"
-author: "Karthik"
+author: "Karthik Subbarao and Matt Kohane""
 date: "September 27, 2018"
 output: html_document
 ---
@@ -26,7 +25,7 @@ HAPPY <- readRDS("HAPPY.rds")
 HAPPY
 
 df.Rep(HAPPY, 1:11,"NA" | "IAP" | "DK","NA")
-
+#1
 HAPPY$POLVIEWS[HAPPY$POLVIEWS == "IAP" |HAPPY$POLVIEWS == "DK" |HAPPY$POLVIEWS == "NA"  ] <- "NA"
 HAPPY$PARTYID[HAPPY$PARTYID == "IAP" |HAPPY$PARTYID == "DK" |HAPPY$PARTYID == "NA"  ] <- "NA"
 HAPPY$WTSSALL[HAPPY$WTSSALL == "IAP" |HAPPY$WTSSALL == "DK" |HAPPY$WTSSALL == "NA"  ] <- "NA"
@@ -40,19 +39,49 @@ HAPPY$YEAR[HAPPY$YEAR == "IAP" |HAPPY$YEAR == "DK" |HAPPY$YEAR == "NA"  ] <- "NA
 HAPPY$HAPPY[HAPPY$HAPPY == "IAP" |HAPPY$HAPPY == "DK" |HAPPY$HAPPY == "NA"  ] <- "NA"
 
 
-grep(“89 OR OLDER”, HAPPY$AGE) 
 
+#2
 typeof(HAPPY$AGE)
 HAPPY$AGE[HAPPY$AGE == '89 OR OLDER'] <- 89
+HAPPY$AGE = as.numeric(HAPPY$AGE)
 # We did not observed any age that was 89 or older
 
-HAPPY$HEALTH
+#3
+HAPPY$MARITAL = factor(HAPPY$MARITAL, levels = c("NEVER MARRIED","SEPARATED","MARRIED","DIVORCED","WIDOWED",NA))
+HAPPY$FINRELA = factor(HAPPY$FINRELA, levels = c("FAR BELOW AVERAGE","BELOW AVERAGE","AVERAGE","ABOVE AVERAGE","FAR ABOVE AVERAGE",NA))
 
 library(ggplot2)
 
 ggplot(data = HAPPY, aes(x = HAPPY,y= AGE)) + geom_jitter()
+# relationship between age and happiness. 
+
 
 ggplot(data = HAPPY, aes(x = HAPPY,y= DEGREE)) + geom_bin2d()
+# relationship between happiness and degrees. 
+
+
+library(ggplot2)
+library(cowplot)
+
+theme_set(theme_grey())
+
+
+poor = dplyr::filter(HAPPY, HEALTH == "POOR")      
+plot1 <- ggplot(data= poor, aes(x = HAPPY ,y= HEALTH)) + geom_jitter() + labs(title = "POOR HEALTH", x = "HAPPINESS", y = "HEALTH") + coord_flip()
+
+fair = dplyr::filter(HAPPY, HEALTH == "FAIR")     
+plot2<- ggplot(data = fair, aes(x = HAPPY ,y= HEALTH)) + geom_jitter() + labs(title = "FAIR HEALTH", x = "HAPPINESS", y = "HEALTH")+ coord_flip()
+
+good= dplyr::filter(HAPPY, HEALTH == "GOOD")     
+plot3 <- ggplot(data = good, aes(x = HAPPY ,y= HEALTH)) + geom_jitter() + labs(title = "GOOD HEALTH", x = "HAPPINESS", y = "HEALTH")+ coord_flip()
+
+excellent= dplyr::filter(HAPPY, HEALTH == "EXCELLENT")      
+plot4<- ggplot(data = excellent, aes(x = HAPPY ,y= HEALTH)) + geom_jitter() + labs(title = "EXCELLENT HEALTH", x = "HAPPINESS", y = "HEALTH")+ coord_flip()
+
+
+
+plot_grid(plot1, plot2,plot3,plot4, labels = "AUTO")
+# relationship between happiness and health. 
 
 head(HAPPY)
 
